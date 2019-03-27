@@ -1,0 +1,4 @@
+/portal/WebContent/
+/portal/target/
+**/.DS_Store
+**/application.properties
