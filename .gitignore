@@ -6,5 +6,5 @@
 **/.DS_Store
 **/application.properties
 
-studentrec/package-lock.json
-studentrec/package.json
+/studentrec/package-lock.json
+/studentrec/package.json
