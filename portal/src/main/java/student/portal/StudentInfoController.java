@@ -62,8 +62,8 @@ public class StudentInfoController {
 	try {
 	    Connection connection = createConnection();
 	    Statement stmt = connection.createStatement();
-	    String sql2 = "SELECT StudentName, EnglishScore, ChineseScore, MathScore FROM Registration WHERE StudentName="
-		    + name;
+	    String sql2 = "SELECT StudentName, EnglishScore, ChineseScore, MathScore FROM Registration WHERE StudentName='"
+		    + name + "'";
 
 	    ResultSet rs = stmt.executeQuery(sql2);
 

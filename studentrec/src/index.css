@@ -7,7 +7,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.col-sm-2 {
+  background-color:yellow;
+}
+.col-sm-4 {
+  background-color:palevioletred;
+}
+.col-sm-6 {
+  background-color:blueviolet;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
