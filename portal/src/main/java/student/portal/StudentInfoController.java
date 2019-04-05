@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,53 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StudentInfoController {
 
+    
+//delete----------------------------------------------
+    @CrossOrigin
+    @DeleteMapping("/studentInfo/{name}")
+    public void delete(@PathVariable String name) {
+	System.out.println("Fetching & Deleting Student " + name);
+	String deleteName = name;
+	boolean findName = searchByName(deleteName);
+	if (findName) {
+	    System.out.println("Unable to delete. Student " + deleteName + " not found");
+	} else {
+	    deleteName(deleteName);
+
+	}
+    }
+
+    private void deleteName(String deleteName) {
+	try {
+	    Connection connection = createConnection();
+	    Statement stmt = connection.createStatement();
+	    String sql = "DELETE  FROM Registration WHERE StudentName ='" + deleteName + "' ";
+	    stmt.execute(sql);
+
+	} catch (SQLException e1) {
+	    e1.printStackTrace();
+	}
+
+    }
+
+    private boolean searchByName(String name) {
+	Connection connection;
+	try {
+	    connection = createConnection();
+	    Statement stmt = connection.createStatement();
+	    String sql = "SELECT * FROM Registration WHERE StudentName ='" + name + "' ";
+	    ResultSet rs = stmt.executeQuery(sql);
+	    if (rs == null) {
+		return true;
+	    }
+	} catch (SQLException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	return false;
+    }
+//------------------------------------------------------------
+    
     /**
      * The JSON object sent from React should include exact same fields as
      * StudentInfo.class here in java, otherwise the JSON conversion library
