@@ -115,7 +115,7 @@ fetch('http://localhost:8080/studentInfo'+ '/' + dele, {
   );
   */
 
-        axios.delete(`http://localhost:8080/studentInfo/xi`)
+        axios.delete(`http://localhost:8080/studentInfo/` + dele)
       .then(
           response => {
         console.log(response);
