@@ -5,9 +5,6 @@
 **/.DS_Store
 **/application.properties
 
-/studentrec/package-lock.json
-/studentrec/package.json
-
 /studentrec/node_modules
 /studentrec/.pnp
 .pnp.js
