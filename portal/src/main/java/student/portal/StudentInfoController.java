@@ -25,8 +25,8 @@ public class StudentInfoController {
     public void delete(@PathVariable String name) {
 	System.out.println("Fetching & Deleting Student " + name);
 	String deleteName = name;
-	boolean findName = searchByName(deleteName);
-	if (findName) {
+	boolean isExists = isExist(deleteName);
+	if (!isExists) {
 	    System.out.println("Unable to delete. Student " + deleteName + " not found");
 	} else {
 	    deleteName(deleteName);
@@ -47,14 +47,14 @@ public class StudentInfoController {
 
     }
 
-    private boolean searchByName(String name) {
+    private boolean isExist(String name) {
 	Connection connection;
 	try {
 	    connection = createConnection();
 	    Statement stmt = connection.createStatement();
 	    String sql = "SELECT * FROM Registration WHERE StudentName ='" + name + "' ";
 	    ResultSet rs = stmt.executeQuery(sql);
-	    if (rs == null) {
+	    if (rs.next()) {
 		return true;
 	    }
 	} catch (SQLException e) {

@@ -88,23 +88,6 @@ class Student extends React.Component {
 //delete---------------------------------------------
     handleSubmit1(event) {
         var dele = this.state.deletename;
-        var config = {
-            headers: {
-                'Content-Type':'application/json'
-            },
-            params: {
-                name: dele
-            }
-        };
-/*
-      axios({
-        method: 'delete',
-        url: 'http://localhost:8080/studentInfo',
-        params: {
-            name: dele
-        }
-      })
-*/
 /*
 fetch('http://localhost:8080/studentInfo'+ '/' + dele, {
     method: 'delete'
