@@ -51,6 +51,8 @@ class Student extends React.Component {
             putname: '',
             entername: '',
             deletename:'',
+            updatename:'',
+            updateChineseScore:'',
 
 
         };
@@ -58,8 +60,11 @@ class Student extends React.Component {
         this.handleChange1 = this.handleChange1.bind(this);
         this.handleChange2= this.handleChange2.bind(this);
         this.handleChange3= this.handleChange3.bind(this);
+        this.handleChangeUpdateName=this.handleChangeUpdateName.bind(this);
+        this.handleChangeUpdateChinesescore=this.handleChangeUpdateChinesescore.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleSubmit1 = this.handleSubmit1.bind(this);
+        this.handleSubmit1 = this.handleSubmit1.bind(this); 
+        this.handleSubmitUpdate=this.handleSubmitUpdate.bind(this);
     }
 
     handleChange(event) {
@@ -84,6 +89,41 @@ class Student extends React.Component {
             deletename: event.target.value
         });
     }
+
+    handleChangeUpdateName(event) {
+        this.setState({
+           updatename: event.target.value
+        });
+    }
+
+    handleChangeUpdateChinesescore(event) {
+        this.setState({
+           updateChineseScore: event.target.value
+        });
+    }
+
+    handleSubmitUpdate(event) {
+
+        const updstudent = {
+            id:0,
+            name:this.state.updatename,
+            chineseScore:this.state.updateChineseScore,
+        };
+        
+        
+
+        axios.post(`http://localhost:8080/studentInfo/1`,updstudent)
+      .then(
+          
+          response => {
+            console.log("2");
+        console.log(response);
+        console.log(response.data);
+      })
+
+    }
+
+
 
 //delete---------------------------------------------
     handleSubmit1(event) {
@@ -224,6 +264,22 @@ fetch('http://localhost:8080/studentInfo'+ '/' + dele, {
 
                 </form>
 
+                  </li>
+
+
+                  <li>
+                <form className="form-inline" onSubmit={this.handleSubmitUpdate}>
+                    <div className="form-group mx-sm-3 mb-2">  
+                    
+                    {/* &nbsp; 空格 */}                  
+                    <label> <strong>Update A Student Info</strong></label> &nbsp;&nbsp;
+                        <input type="text"  value={this.state.updatename} placeholder="name" onChange={this.handleChangeUpdateName} />
+                        <input type="text"  value={this.state.updateChineseScore} placeholder="chinese score" onChange={this.handleChangeUpdateChinesescore} />
+                    
+                    </div>
+                    <input className="btn btn-primary" type="submit" value="UPDATE" />
+
+                </form>
                   </li>
 
 
