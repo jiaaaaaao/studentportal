@@ -179,8 +179,8 @@ public class StudentInfoController {
 	} catch (ClassNotFoundException e) {
 	    e.printStackTrace();
 	}
-	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb", "jiaowang",
-		"jiaowang");
+	Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb", "wukong",
+		"wukong");
 	System.out.println("create connection");
 
 	return connection;

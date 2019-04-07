@@ -1,8 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
-import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 
 class Studentid extends React.Component {
@@ -129,32 +126,23 @@ class Student extends React.Component {
     handleSubmit1(event) {
         
         var dele = this.state.deletename;
-
-        fetch(`http://localhost:8080/studentInfo`+ '/' + dele, {method: 'DELETE'})
-            .then(res => res.json())
-            .then(res => {
-                console.log('Deleted:', res.message)
-                return res;
-            })
-            .catch(err => console.error(err))
   
-  /*
- console.log("1 come on.............");            
+        console.log("1 come on.............");
         axios.delete(`http://localhost:8080/studentInfo/` + dele)
-      .then(
-        
-          response => {
-              alert("this student's info deleted")
-              console.log("2 come on.............");            
-        console.log(response);
-        console.log(response.status);
-      })
-      .catch(
-        response => {
-            console.log(response);
-        }
-    )
-*/
+            .then(
+
+                response => {
+                    alert("this student's info deleted")
+                    console.log("2 come on.............");
+                    console.log(response);
+                    console.log(response.status);
+                })
+            .catch(
+                response => {
+                    console.log(response);
+                }
+            )
+
     }
 //----------------------------------------------------------
 
@@ -190,7 +178,7 @@ class Student extends React.Component {
         var inputTag = document.getElementById("searchName");
         var searchName = inputTag.value;
         //2.通过input 的onchange实时更新this.state.entername的value
-        var stateSavedName = this.state.entername;
+        //var stateSavedName = this.state.entername;
 
         axios.get(`http://localhost:8080/studentInfo`,
             {

@@ -2,6 +2,7 @@
 /portal/.project
 /portal/WebContent/
 /portal/target/
+/portal/bin/
 **/.DS_Store
 **/application.properties
 
@@ -25,3 +26,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
