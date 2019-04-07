@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class StudentInfoController {
-    
+
     @CrossOrigin
     @RequestMapping(value = "/studentInfo/1", method = RequestMethod.POST)
     public void update(@RequestBody StudentInfo student) {
@@ -36,9 +37,10 @@ public class StudentInfoController {
 	try {
 	    connection = createConnection();
 	    Statement stmt = connection.createStatement();
-	    String sql = "UPDATE Registration  SET ChineseScore = '" + updchinesescore + "'  WHERE StudentName ='"+ updname + "'";
+	    String sql = "UPDATE Registration  SET ChineseScore = '" + updchinesescore + "'  WHERE StudentName ='"
+		    + updname + "'";
 	    stmt.executeUpdate(sql);
-	    
+
 	} catch (SQLException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
@@ -49,28 +51,38 @@ public class StudentInfoController {
     // delete----------------------------------------------
     @CrossOrigin
     @DeleteMapping("/studentInfo/{name}")
-    public void delete(@PathVariable String name) {
+    public ResponseEntity<String> delete(@PathVariable String name) {
 	System.out.println("Fetching & Deleting Student " + name);
 	String deleteName = name;
+	Response result = new Response(null);
 	boolean isExists = isExist(deleteName);
+
 	if (!isExists) {
 	    System.out.println("Unable to delete. Student " + deleteName + " not found");
-	} else {
-	    deleteName(deleteName);
+	    result.response = "Not found";
+	    return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
 
+	} else {
+	    boolean isSuccess = deleteName(deleteName);
+	    return isSuccess ? new ResponseEntity<>("hello", HttpStatus.OK)
+		    : new ResponseEntity<>("database", HttpStatus.BAD_REQUEST);
 	}
     }
 
-    private void deleteName(String deleteName) {
+    private boolean deleteName(String deleteName) {
+	boolean result = false;
+
 	try {
 	    Connection connection = createConnection();
 	    Statement stmt = connection.createStatement();
 	    String sql = "DELETE  FROM Registration WHERE StudentName ='" + deleteName + "' ";
 	    stmt.execute(sql);
-
+	    result = true;
 	} catch (SQLException e1) {
 	    e1.printStackTrace();
 	}
+
+	return result;
 
     }
 

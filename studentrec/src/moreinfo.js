@@ -5,8 +5,6 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 
-
-
 class Studentid extends React.Component {
     render() {
         return (
@@ -120,31 +118,43 @@ class Student extends React.Component {
         console.log(response);
         console.log(response.data);
       })
+      .catch(
+        response => {
+            console.log(response);
+        }
+    )
 
     }
-
-
-
 //delete---------------------------------------------
     handleSubmit1(event) {
+        
         var dele = this.state.deletename;
-/*
-fetch('http://localhost:8080/studentInfo'+ '/' + dele, {
-    method: 'delete'
-  }).then(response =>
-    response.json().then(json => {
-      return json;
-    })
-  );
-  */
 
+        fetch(`http://localhost:8080/studentInfo`+ '/' + dele, {method: 'DELETE'})
+            .then(res => res.json())
+            .then(res => {
+                console.log('Deleted:', res.message)
+                return res;
+            })
+            .catch(err => console.error(err))
+  
+  /*
+ console.log("1 come on.............");            
         axios.delete(`http://localhost:8080/studentInfo/` + dele)
       .then(
+        
           response => {
+              alert("this student's info deleted")
+              console.log("2 come on.............");            
         console.log(response);
-        console.log(response.data);
+        console.log(response.status);
       })
-
+      .catch(
+        response => {
+            console.log(response);
+        }
+    )
+*/
     }
 //----------------------------------------------------------
 
