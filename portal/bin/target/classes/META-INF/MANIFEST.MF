@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: wukong
+Build-Jdk: 12
+Implementation-Title: portal
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: student
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/portal
+Created-By: Maven Integration for Eclipse
+
