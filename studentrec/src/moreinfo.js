@@ -127,8 +127,12 @@ class Student extends React.Component {
         
         var dele = this.state.deletename;
   
-        console.log("1 come on.............");
-        axios.delete(`http://localhost:8080/studentInfo/` + dele)
+        axios.delete(`http://localhost:8080/studentInfo`,
+            {
+                params: {
+                    name: dele
+                }
+            })
             .then(
 
                 response => {

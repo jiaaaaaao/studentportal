@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Moreinfo from './moreinfo'
 import App from './App'           
 import Users from './external'
+import Login from './userlogin'
 
 const routing = (
     <Router>
@@ -24,11 +25,13 @@ const routing = (
               <li>
               <Link to="/external">External</Link>
               </li>
+
           </ul>
         
         <Route exact path="/" component={App} />             {/*   App 是App.js里面的export default App（是Class App） */}
         <Route path="/moreinfo" component={Moreinfo} />  
         <Route path="/external" component={Users} /> 
+      
       </div>
     </Router>
   )
@@ -36,7 +39,7 @@ const routing = (
 
 
 
-ReactDOM.render(routing, document.getElementById('root'));
+//ReactDOM.render(routing, document.getElementById('root'));
 
 
   
