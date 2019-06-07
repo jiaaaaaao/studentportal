@@ -39,7 +39,7 @@ const routing = (
       {/*   App 是App.js里面的export default App（是Class App） */}
       {/*<Route exact path="/" component={App} />           */}
 
-      <PrivateRoute exact path="/" component={Protected} />
+      <PrivateRoute exact path="/" component={Protected} /> {/*当可以login的时候，页面跳转到protected页面 */}
 
       <Route path="/login" component={Login} />
       <Route path="/moreinfo" component={Moreinfo} />

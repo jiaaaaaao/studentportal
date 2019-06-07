@@ -7,12 +7,32 @@ import Users from './external';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class Login extends React.Component {
-    state = { redirectToReferrer: false };
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            redirectToReferrer: false
+        };
+
+        this.handleChangeUsername = this.handleChangeUsername.bind(this);
+        this.handleChangePassword = this.handleChangePassword.bind(this);
+    }
+    handleChangeUsername(event) {
+        this.setState({
+            username: event.target.value
+        });
+    }
+    handleChangePassword(event) {
+        this.setState({
+            password: event.target.value
+        });
+    }
 
     login = () => {
-        fakeAuth.authenticate(() => {
-            this.setState({ redirectToReferrer: true });
-        });
+        fakeAuth.authenticate();
+        this.setState({ redirectToReferrer: true });
+
     };
 
     render() {
@@ -23,6 +43,16 @@ class Login extends React.Component {
 
         return (
             <div>
+                <label> Username</label>
+                <br></br>
+                <input type="text" value={this.state.username} placeholder="Enter Username" onChange={this.handleChangeUsername} />
+                <br></br>
+                <label for="exampleInputPassword1"> Password</label>
+                <br></br>
+                <input type="password" value={this.state.password} placeholder="Enter your password" onChange={this.handleChangePassword} />
+
+
+
                 <p>You must log in to view the page at {from.pathname}</p>
                 <button onClick={this.login}>Log in</button>
             </div>
@@ -33,10 +63,12 @@ class Login extends React.Component {
 
 const fakeAuth = {
     isAuthenticated: false,
+    //authenticate里面写的是与database链接看看有没有这个user?
     authenticate(cb) {
         this.isAuthenticated = true;
         setTimeout(cb, 100); // fake async
     },
+
     signout(cb) {
         this.isAuthenticated = false;
         setTimeout(cb, 100);
@@ -71,4 +103,4 @@ function PrivateRoute({ component: InputComponent, ...rest }) {
 }
 
 
-export { Login, PrivateRoute}
+export { Login, PrivateRoute }
