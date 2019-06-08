@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
 import Users from './external';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { createBrotliCompress } from 'zlib';
 
 class Login extends React.Component {
     constructor(props) {
@@ -30,30 +31,36 @@ class Login extends React.Component {
     }
 
     login = () => {
-        fakeAuth.authenticate();
-        this.setState({ redirectToReferrer: true });
+        fakeAuth.authenticate(() => {
+            fakeAuth.isAuthenticated = true;
+            this.setState({ redirectToReferrer: true });
+        });
+
+
+       {/*} fakeAuth.authenticate();
+    this.setState({ redirectToReferrer: true });*/}
 
     };
 
     render() {
         let { from } = this.props.location.state || { from: { pathname: "/" } };
+        //  let { redirectToReferrer } = this.state这个公式里面的redirectToReferrer（1）和上面的construct里面的this.state里面的redirectToReferrer（2）不是一个。是把（2）付给（1）。
         let { redirectToReferrer } = this.state;
 
-        if (redirectToReferrer) return <Redirect to={from} />;
+            if (redirectToReferrer) return <Redirect to={from} />;
 
         return (
-            <div>
+            <div class='loginbox'>
                 <label> Username</label>
                 <br></br>
-                <input type="text" value={this.state.username} placeholder="Enter Username" onChange={this.handleChangeUsername} />
+                <input type="text" id='searchName' value={this.state.username} placeholder="Enter Username" onChange={this.handleChangeUsername} />
                 <br></br>
                 <label for="exampleInputPassword1"> Password</label>
                 <br></br>
-                <input type="password" value={this.state.password} placeholder="Enter your password" onChange={this.handleChangePassword} />
-
-
-
-                <p>You must log in to view the page at {from.pathname}</p>
+                <input type="password" id='searchPassword' value={this.state.password} placeholder="Enter your password" onChange={this.handleChangePassword} />
+                <br></br>
+                <br></br>
+                {/*<p>You must log in to view the page at {from.pathname}</p>*/}
                 <button onClick={this.login}>Log in</button>
             </div>
         );
@@ -63,10 +70,40 @@ class Login extends React.Component {
 
 const fakeAuth = {
     isAuthenticated: false,
+
     //authenticate里面写的是与database链接看看有没有这个user?
     authenticate(cb) {
-        this.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
+        var inputTagName = document.getElementById("searchName");
+        var inputName = inputTagName.value;
+
+        var inputTagPassword = document.getElementById("searchPassword");
+        var inputPassword = inputTagPassword.value;
+
+        axios.get(`http://localhost:8080/userLogin`,
+        {
+            params: {
+                username: inputName
+            }
+        })
+        .then(
+            response => {
+                console.log(response);
+                console.log(response.data);
+
+                const info = response.data;
+                if(info.username===inputName && info.password===inputPassword){
+                    cb();
+                }
+                console.log(this.state);
+            }
+        )
+        .catch(
+            response => {
+                console.log(response);
+            }
+        )
+
+      
     },
 
     signout(cb) {
