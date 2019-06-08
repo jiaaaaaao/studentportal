@@ -36,8 +36,7 @@ class Login extends React.Component {
             this.setState({ redirectToReferrer: true });
         });
 
-
-       {/*} fakeAuth.authenticate();
+        {/*} fakeAuth.authenticate();
     this.setState({ redirectToReferrer: true });*/}
 
     };
@@ -47,7 +46,14 @@ class Login extends React.Component {
         //  let { redirectToReferrer } = this.state这个公式里面的redirectToReferrer（1）和上面的construct里面的this.state里面的redirectToReferrer（2）不是一个。是把（2）付给（1）。
         let { redirectToReferrer } = this.state;
 
-            if (redirectToReferrer) return <Redirect to={from} />;
+        //TODO
+        var isFromLogOut = true // !this.props.location.state.logoutMark || false;
+        
+        if (redirectToReferrer && isFromLogOut) return <Redirect to={{
+            from,
+            state: { key1:"test"
+            }
+        }} />;
 
         return (
             <div class='loginbox'>
@@ -60,6 +66,9 @@ class Login extends React.Component {
                 <input type="password" id='searchPassword' value={this.state.password} placeholder="Enter your password" onChange={this.handleChangePassword} />
                 <br></br>
                 <br></br>
+                <li>
+                    <Link to="/external">External</Link>
+                </li>
                 {/*<p>You must log in to view the page at {from.pathname}</p>*/}
                 <button onClick={this.login}>Log in</button>
             </div>
@@ -80,30 +89,30 @@ const fakeAuth = {
         var inputPassword = inputTagPassword.value;
 
         axios.get(`http://localhost:8080/userLogin`,
-        {
-            params: {
-                username: inputName
-            }
-        })
-        .then(
-            response => {
-                console.log(response);
-                console.log(response.data);
-
-                const info = response.data;
-                if(info.username===inputName && info.password===inputPassword){
-                    cb();
+            {
+                params: {
+                    username: inputName
                 }
-                console.log(this.state);
-            }
-        )
-        .catch(
-            response => {
-                console.log(response);
-            }
-        )
+            })
+            .then(
+                response => {
+                    console.log(response);
+                    console.log(response.data);
 
-      
+                    const info = response.data;
+                    if (info.username === inputName && info.password === inputPassword) {
+                        cb();
+                    }
+                    console.log(this.state);
+                }
+            )
+            .catch(
+                response => {
+                    console.log(response);
+                }
+            )
+
+
     },
 
     signout(cb) {
@@ -120,11 +129,11 @@ function PrivateRoute({ component: InputComponent, ...rest }) {
         <Route
             {...rest}
 
-            render={props =>
-                fakeAuth.isAuthenticated ?
+            render={props => {
+                return fakeAuth.isAuthenticated ?
                     (
                         // if is authenticated render here          
-                        <InputComponent />
+                        <InputComponent propertyA={props.location.state}/>
                     ) : (
                         // if is NOT authenticated redirect to /login 
                         <Redirect
@@ -134,6 +143,7 @@ function PrivateRoute({ component: InputComponent, ...rest }) {
                             }}
                         />
                     )
+            }
             }
         />
     );
