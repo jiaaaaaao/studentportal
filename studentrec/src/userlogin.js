@@ -46,10 +46,7 @@ class Login extends React.Component {
         //  let { redirectToReferrer } = this.state这个公式里面的redirectToReferrer（1）和上面的construct里面的this.state里面的redirectToReferrer（2）不是一个。是把（2）付给（1）。
         let { redirectToReferrer } = this.state;
 
-        //TODO
-        var isFromLogOut = true // !this.props.location.state.logoutMark || false;
-
-        if (redirectToReferrer && isFromLogOut) return <Redirect to={{
+        if (redirectToReferrer) return <Redirect to={{
             from,
             state: {
                 key1: "test"
