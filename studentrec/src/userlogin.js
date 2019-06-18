@@ -4,7 +4,7 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
 import Users from './external';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter, Link } from "react-router-dom";
 import { createBrotliCompress } from 'zlib';
 
 class Login extends React.Component {
@@ -48,10 +48,11 @@ class Login extends React.Component {
 
         //TODO
         var isFromLogOut = true // !this.props.location.state.logoutMark || false;
-        
+
         if (redirectToReferrer && isFromLogOut) return <Redirect to={{
             from,
-            state: { key1:"test"
+            state: {
+                key1: "test"
             }
         }} />;
 
@@ -121,6 +122,24 @@ const fakeAuth = {
     }
 };
 
+const AuthButton = withRouter(
+    ({ history }) =>
+        fakeAuth.isAuthenticated ? (
+            <p>
+                Welcome!{" "}
+                <button
+                    onClick={() => {
+                        fakeAuth.signout(() => history.push("/"));
+                    }}
+                >
+                    Sign out
+          </button>
+            </p>
+        ) : (
+                <p>You are not logged in.</p>
+            )
+);
+
 // Define a component named PrivateRoute
 // InputComponent in our case is the passed in "Protected" component
 // "...rest" are other parameter passed in, in our case it is the path
@@ -133,7 +152,7 @@ function PrivateRoute({ component: InputComponent, ...rest }) {
                 return fakeAuth.isAuthenticated ?
                     (
                         // if is authenticated render here          
-                        <InputComponent propertyA={props.location.state}/>
+                        <InputComponent propertyA={props.location.state} />
                     ) : (
                         // if is NOT authenticated redirect to /login 
                         <Redirect
@@ -150,4 +169,4 @@ function PrivateRoute({ component: InputComponent, ...rest }) {
 }
 
 
-export { Login, PrivateRoute }
+export { Login, PrivateRoute, AuthButton }

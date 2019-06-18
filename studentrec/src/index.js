@@ -10,13 +10,15 @@ import App from './App'
 import Users from './external'
 import { Login } from './userlogin'
 import { PrivateRoute } from './userlogin'
+import { AuthButton } from './userlogin'
 import Protected from './protected'
 
 const routing = (
   <Router>
     <div>
-              {/*  "/App"  是App.js */}
-        {/*
+      <AuthButton />
+      {/*  "/App"  是App.js */}
+      {/*
       <ul>
         <li>
           <Link to="/">Home</Link>                 
@@ -45,7 +47,7 @@ const routing = (
       <Route path="/moreinfo" component={Moreinfo} />
       <Route path="/external" component={Users} />
 
-      
+
     </div>
   </Router>
 )
