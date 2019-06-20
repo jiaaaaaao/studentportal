@@ -12,7 +12,7 @@ import { Login } from './userlogin'
 import { PrivateRoute } from './userlogin'
 import { AuthButton } from './userlogin'
 import Protected from './protected'
-
+import Register from './register'
 const routing = (
   <Router>
     <div>
@@ -46,6 +46,7 @@ const routing = (
       <Route path="/login" component={Login} />
       <Route path="/moreinfo" component={Moreinfo} />
       <Route path="/external" component={Users} />
+      <Route path="/register" component={Register }/>
 
 
     </div>

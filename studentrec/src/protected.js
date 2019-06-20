@@ -1,4 +1,5 @@
 import React from 'react';
+import Moreinfo from './moreinfo'
 import { Login } from './userlogin'
 import { Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Route, withRouter, Link } from "react-router-dom";
@@ -15,6 +16,7 @@ class Protected extends React.Component {
     render() {
         return (
             <div>
+                <Moreinfo/>
                 <h3>Protected page, information only shows when you log in</h3>
 
             </div>

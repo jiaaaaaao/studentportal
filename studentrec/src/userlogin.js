@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import Users from './external';
 import { BrowserRouter as Router, Route, withRouter, Link } from "react-router-dom";
 import { createBrotliCompress } from 'zlib';
+import Register from'./register';
 
 class Login extends React.Component {
     constructor(props) {
@@ -65,7 +66,7 @@ class Login extends React.Component {
                 <br></br>
                 <br></br>
                 <li>
-                    <Link to="/external">External</Link>
+                    <Link to="/register">Create A New Account</Link>
                 </li>
                 {/*<p>You must log in to view the page at {from.pathname}</p>*/}
                 <button onClick={this.login}>Log in</button>
@@ -151,7 +152,7 @@ function PrivateRoute({ component: InputComponent, ...rest }) {
                         // if is authenticated render here          
                         <InputComponent propertyA={props.location.state} />
                     ) : (
-                        // if is NOT authenticated redirect to /login 
+                        // if is NOT authenticated redirect to /login ,props.location 是current location，就是“/”
                         <Redirect
                             to={{
                                 pathname: "/login",

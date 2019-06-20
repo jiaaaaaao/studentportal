@@ -210,6 +210,34 @@ public class StudentInfoController {
 		}
 
 	}
+	
+	
+	@CrossOrigin
+	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
+	public ValidateResponse adduserAcc(@RequestBody UserLogin userLogin) {
+		createuserInfo(userLogin);
+
+		return new ValidateResponse("haha");
+	}
+
+	private void createuserInfo(UserLogin userLogin) {
+		Connection connection;
+		try {
+			connection = createConnection();
+			Statement stmt = connection.createStatement();
+			String sql1 = new StringBuilder().append("INSERT INTO users").append(" VALUES ('")
+					.append(userLogin.username).append("','").append(userLogin.password).append("')").toString();
+			stmt.executeUpdate(sql1);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
 
 	private Connection createConnection() throws SQLException {
 		try {
