@@ -29,7 +29,7 @@ class Register extends React.Component {
         });
     }
 
-    add() {
+    add(history) {
 
         var inputTagName = document.getElementById("Name");
         var inputName = inputTagName.value;
@@ -46,6 +46,7 @@ class Register extends React.Component {
             .then(
                 response => {
                     console.log(response);             
+                    history.push("/")
                 }
             )
             .catch(
@@ -56,7 +57,7 @@ class Register extends React.Component {
     }
 
 
-    create(cb) {
+    create(cb, history) {
         var inputTagName = document.getElementById("Name");        
         var inputName = inputTagName.value;
 
@@ -76,7 +77,7 @@ class Register extends React.Component {
 
                     const info = response.data;
                     if (info.username !== inputName && info.password !== inputPassword) {
-                        cb();
+                        cb(history);                        
                     }
                     
                 }
@@ -107,7 +108,7 @@ class Register extends React.Component {
                 <br></br>
                 <br></br>
                 <button onClick={()=>{
-                    this.create(this.add);
+                    this.create(this.add, this.props.history);                    
                 }}>Create a New Account</button>
             </div>
         );
